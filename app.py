@@ -1,14 +1,18 @@
-from flask import Flask,redirect,url_for,render_template,request
+## Create a simple flask application
 
-app= Flask(__name__)
+from flask import Flask,render_template,request,redirect,url_for
+
+## create the flask app
+
+app=Flask(__name__)
 
 @app.route('/')
 def home():
-    return "<h1>Hello, World!</h1>"
+    return "<h2>Hello, World!</h2>"
 
 @app.route('/welcome')
 def welcome():
-    return "<h1>welcome to flask tutorial</h1>"
+    return "Welcome to the Flask Tutorials"
 
 @app.route('/index')
 def index():
@@ -22,27 +26,25 @@ def success(score):
 def fail(score):
     return "the person has failed and the score is "+str(score)
 
-@app.route('/calculate',methods=['POST','GET'])
+
+@app.route('/calculate', methods=['POST', 'GET'])
 def calculate():
-    if request.method=='GET':
+    if request.method == 'GET':
         return render_template('calculate.html')
     else:
-        maths=float(request.form['maths'])
-        science=float(request.form['science'])
-        history=float(request.form['history'])
+        maths = float(request.form['maths'])
+        science = float(request.form['science'])
+        history = float(request.form['history'])
 
-        average_marks=(maths+science+history)/3
-        result="" 
-        if average_marks>=50:
-            result="success"
-        else:
-            result="fail"
+        average_marks = (maths + science + history) / 3
 
-        return redirect(url_for(result,score=average_marks))
+        return render_template('result.html',results=average_marks)
 
 
-        #return render_template('result.html',results=average_marks)
+## Assignemnt Try for loop
 
-if __name__=="__main__":
+
+
+if __name__=='__main__':
     app.run(debug=True)
-    
+
